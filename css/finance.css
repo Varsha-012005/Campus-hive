@@ -1,0 +1,517 @@
+/* Consolidated Finance Dashboard Styles */
+:root {
+    --primary: darkcyan;
+    --secondary: lightcyan;
+    --danger: #e74c3c;
+    --success: #2ecc71;
+    --warning: #f39c12;
+    --background-light: #ffffff;
+    --background-dark: #2d3436;
+    --text-light: #2d3436;
+    --text-dark: #ffffff;
+    --sidebar-width: 280px;
+    --header-height: 80px;
+    --finance-primary: #5b4bb7;
+    --finance-secondary: #182848;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    margin: 0;
+    background: var(--background-light);
+    color: var(--text-light);
+    transition: all 0.3s ease;
+}
+
+body[data-theme="dark"] {
+    background: linear-gradient(135deg, #1e1e2f 0%, #12121c 100%);
+    color: #f1f1f1;
+}
+
+.dashboard-container {
+    display: flex;
+    min-height: 100vh;
+    color: lgiht;
+}
+
+/* Sidebar with gradient */
+.sidebar {
+    width: var(--sidebar-width);
+    background: linear-gradient(165deg, darkcyan, lightcyan);
+    color: white;
+    position: fixed;
+    height: 100vh;
+    padding: 2rem 0;
+    box-shadow: 4px 0 15px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    overflow-y: auto;
+    top: 0;
+    left: 0;
+}
+
+.sidebar::before {
+    content: '';
+    position: absolute;
+    width: 180px;
+    height: 180px;
+    background: rgba(255, 255, 255, 0.12);
+    bottom: -40px;
+    right: -40px;
+    border-radius: 50%;
+    z-index: -1;
+    animation: floatBlob 8s ease-in-out infinite alternate;
+}
+
+.sidebar nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.sidebar nav ul li {
+    padding: 0.8rem 1.5rem;
+    transition: all 0.3s ease;
+    position: relative;
+}
+
+.sidebar nav ul li a {
+    color: rgba(255, 255, 255, 0.9);
+    text-decoration: none;
+    display: block;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.sidebar nav ul li:hover {
+    background: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar nav ul li.active {
+    background: rgba(255, 255, 255, 0.2);
+    border-left: 4px solid var(--primary);
+}
+
+.sidebar nav ul li.active a {
+    color: white;
+}
+
+.dashboard-header {
+    position: fixed;
+    top: 0;
+    left: var(--sidebar-width);
+    right: 0;
+    height: var(--header-height);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 2rem;
+    background: rgba(255, 255, 255, 0.95);
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+    z-index: 99;
+}
+
+body[data-theme="dark"] .dashboard-header {
+    background: rgba(30, 30, 50, 0.9);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.dashboard-header h1 {
+    font-size: 1.8rem;
+    margin: 0;
+    color: darkslateblue;
+    font-weight: 700;
+}
+
+body[data-theme="dark"] .dashboard-header h1 {
+    color: var(--primary);
+}
+
+.user-info {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logout-btn {
+    background: darkslateblue;
+    color: white;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    text-decoration: none;
+    font-weight: 500;
+    transition: all 0.3s ease;
+}
+
+.logout-btn:hover {
+    background: #357bd8;
+}
+
+.dashboard-content {
+    margin-left: var(--sidebar-width);
+    margin-top: var(--header-height);
+    width: calc(100% - var(--sidebar-width));
+    padding: 2rem;
+    min-height: calc(100vh - var(--header-height));
+    background: rgba(255, 255, 255, 0.9);
+}
+
+body[data-theme="dark"] .dashboard-content {
+    background: linear-gradient(135deg, #1e1e2f 0%, #12121c 100%);
+}
+
+.main-panel {
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Finance Cards - Solid colors instead of gradients */
+.finance-card,
+.report-card,
+.settings-card,
+.transaction-card,
+.fee-card {
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    background: white;
+    color: var(--text-light);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border: 1px solid #eee;
+}
+
+body[data-theme="dark"] .finance-card,
+body[data-theme="dark"] .report-card,
+body[data-theme="dark"] .settings-card,
+body[data-theme="dark"] .transaction-card,
+body[data-theme="dark"] .fee-card {
+    background: rgba(30, 30, 50, 0.7);
+    color: var(--text-dark);
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.finance-card:hover,
+.report-card:hover,
+.settings-card:hover,
+.transaction-card:hover,
+.fee-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15);
+}
+
+/* Tables */
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 1rem 0;
+    background: white;
+    box-shadow: 0 2px 3px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+}
+
+body[data-theme="dark"] table {
+    background: rgba(30, 30, 50, 0.7);
+}
+
+th, td {
+    padding: 1rem;
+    text-align: left;
+    border-bottom: 1px solid #eee;
+}
+
+body[data-theme="dark"] th,
+body[data-theme="dark"] td {
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+th {
+    background: var(--primary);
+    color: white;
+    font-weight: 500;
+}
+
+tr:hover {
+    background: rgba(0, 0, 0, 0.02);
+}
+
+body[data-theme="dark"] tr:hover {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+/* Forms */
+.form-group {
+    margin-bottom: 1rem;
+}
+
+label {
+    display: block;
+    margin-bottom: 0.5rem;
+    font-weight: 500;
+}
+
+input, select, textarea {
+    width: 100%;
+    padding: 0.75rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    font-family: inherit;
+    font-size: 1rem;
+}
+
+body[data-theme="dark"] input,
+body[data-theme="dark"] select,
+body[data-theme="dark"] textarea {
+    background: rgba(30, 30, 50, 0.5);
+    border-color: rgba(255, 255, 255, 0.1);
+    color: white;
+}
+
+/* Alerts */
+.alert {
+    padding: 1rem;
+    margin-bottom: 1rem;
+    border-radius: 4px;
+}
+
+.alert.success {
+    background: #d4edda;
+    color: #155724;
+}
+
+.alert.error {
+    background: #f8d7da;
+    color: #721c24;
+}
+
+.alert.warning {
+    background: #fff3cd;
+    color: #856404;
+}
+
+body[data-theme="dark"] .alert.success {
+    background: rgba(40, 167, 69, 0.2);
+    color: #d4edda;
+}
+
+body[data-theme="dark"] .alert.error {
+    background: rgba(220, 53, 69, 0.2);
+    color: #f8d7da;
+}
+
+body[data-theme="dark"] .alert.warning {
+    background: rgba(255, 193, 7, 0.2);
+    color: #fff3cd;
+}
+
+/* Modals */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+    align-items: center;
+    justify-content: center;
+}
+
+.modal-content {
+    background: white;
+    padding: 2rem;
+    border-radius: 8px;
+    width: 100%;
+    max-width: 600px;
+    position: relative;
+}
+
+body[data-theme="dark"] .modal-content {
+    background: #1e1e2f;
+}
+
+.close {
+    position: absolute;
+    top: 1rem;
+    right: 1rem;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+/* Status Badges */
+.status-badge {
+    display: inline-block;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
+.status-badge.pending {
+    background: #fff3cd;
+    color: #856404;
+}
+
+.status-badge.completed, .status-badge.paid {
+    background: #d4edda;
+    color: #155724;
+}
+
+/* Quick Actions */
+.quick-actions {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 1rem;
+    margin-top: 1.5rem;
+}
+
+.quick-actions a {
+    text-align: center;
+    padding: 0.75rem;
+    border-radius: 4px;
+    background: var(--primary);
+    color: white;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+.quick-actions a:hover {
+    background: #357bd8;
+    transform: translateY(-2px);
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    margin-top: 2rem;
+    gap: 0.5rem;
+}
+
+.pagination a, .pagination span {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    background: var(--primary);
+    color: white;
+    border-color: var(--primary);
+}
+
+/* Animation */
+@keyframes floatBlob {
+    0% {
+        transform: translate(0, 0);
+    }
+    50% {
+        transform: translate(20px, 20px);
+    }
+    100% {
+        transform: translate(0, 0);
+    }
+}
+
+/* Responsive Adjustments */
+@media (max-width: 1200px) {
+    .stats-overview {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 992px) {
+    .sidebar {
+        width: 240px;
+    }
+    .dashboard-content {
+        margin-left: 240px;
+        width: calc(100% - 240px);
+    }
+    .dashboard-header {
+        left: 240px;
+    }
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        z-index: 1000;
+    }
+    .sidebar.active {
+        transform: translateX(0);
+    }
+    .dashboard-content {
+        margin-left: 0;
+        width: 100%;
+    }
+    .dashboard-header {
+        left: 0;
+    }
+    
+    .quick-actions {
+        grid-template-columns: 1fr;
+    }
+    
+    .report-actions {
+        flex-direction: column;
+        gap: 0.5rem;
+    }
+}
+
+@media (max-width: 576px) {
+    .dashboard-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 1rem;
+        padding: 1rem;
+        height: auto;
+    }
+    .user-info {
+        width: 100%;
+        justify-content: space-between;
+    }
+    .dashboard-content {
+        padding: 1rem;
+    }
+}
+
+/* Print Styles */
+@media print {
+    .sidebar, 
+    .dashboard-header, 
+    .report-actions,
+    .quick-actions {
+        display: none !important;
+    }
+    
+    .dashboard-content {
+        margin: 0 !important;
+        padding: 0 !important;
+        width: 100% !important;
+    }
+    
+    .report-results,
+    .finance-card,
+    .report-card,
+    .settings-card,
+    .transaction-card,
+    .fee-card {
+        background: white !important;
+        color: black !important;
+        box-shadow: none !important;
+        page-break-inside: avoid;
+    }
+    
+    table {
+        page-break-inside: auto;
+    }
+    
+    tr {
+        page-break-inside: avoid;
+        page-break-after: auto;
+    }
+}

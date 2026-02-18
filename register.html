@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>University System - Registration</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --primary: #f6b93b;
+            --secondary: #1e3799;
+            --background-light: #ffffff;
+            --background-dark: #2d3436;
+            --text-light: #2d3436;
+            --text-dark: #ffffff;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            margin: 0;
+            background: var(--background-light);
+            color: var(--text-light);
+            transition: all 0.3s ease;
+        }
+
+        body[data-theme="dark"] {
+            background: linear-gradient(135deg, #1e1e2f 0%, #12121c 100%);
+            color: #f1f1f1;
+        }
+
+        .register-container {
+            display: flex;
+            height: 100vh;
+        }
+
+        .left-panel {
+            flex: 1;
+            background: linear-gradient(135deg, #1e3799, #3c6382);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            color: #fffefe;
+            text-align: center;
+            padding: 4rem 2rem;
+            position: sticky;
+            overflow: hidden;
+            font-family: 'Segoe UI', 'Poppins', sans-serif;
+        }
+
+        .left-panel::before,
+        .left-panel::after {
+            content: '';
+            position: absolute;
+            border-radius: 50%;
+            z-index: 0;
+        }
+
+        .left-panel::before {
+            width: 280px;
+            height: 280px;
+            background: rgba(255, 255, 255, 0.2);
+            top: -60px;
+            left: -60px;
+            animation: floatBlob 6s ease-in-out infinite alternate;
+        }
+
+        .left-panel::after {
+            width: 180px;
+            height: 180px;
+            background: rgba(255, 255, 255, 0.12);
+            bottom: -40px;
+            right: -40px;
+            animation: floatBlob 5s ease-in-out infinite alternate-reverse;
+        }
+
+        @keyframes floatBlob {
+            0% {
+                transform: translate(0, 0);
+            }
+
+            100% {
+                transform: translate(15px, 15px);
+            }
+        }
+
+        .left-panel .logo {
+            z-index: 1;
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: 1.5px;
+            margin-bottom: 2rem;
+            color: #ffffff;
+            position: relative;
+            display: inline-block;
+            text-shadow: 2px 2px 4px rgba(255, 255, 255, 0.703), 0 0 8px rgb(255, 255, 255);
+            animation: pulseGlow 2s infinite alternate;
+        }
+
+        @keyframes pulseGlow {
+            from {
+                text-shadow: 0 0 10px rgba(255, 255, 255, 0.2), 0 0 20px rgba(255, 193, 7, 0.2);
+                transform: scale(1);
+            }
+
+            to {
+                text-shadow: 0 0 20px rgba(255, 193, 7, 0.5), 0 0 40px rgba(255, 255, 255, 0.3);
+                transform: scale(1.02);
+            }
+        }
+
+        .left-panel h1 {
+            z-index: 1;
+            font-size: 3.2rem;
+            font-weight: 700;
+            margin-bottom: 1.2rem;
+            line-height: 1.3;
+            color: #ffffff;
+        }
+
+        .left-panel p {
+            z-index: 1;
+            max-width: 460px;
+            font-size: 1.2rem;
+            font-weight: 400;
+            line-height: 1.7;
+            color: #bce9f6;
+        }
+
+        .right-panel {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-y: scroll;
+            padding: 20px 0;
+            align-items: flex-start;
+        }
+
+        .register-box {
+            width: 80%;
+            max-width: 400px;
+            background: rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(10px);
+            border-radius: 15px;
+            padding: 2rem;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            margin-top: 5rem;
+            margin-bottom: 2rem;
+        }
+
+        body[data-theme="dark"] .register-box {
+            background: rgba(30, 30, 50, 0.6);
+        }
+
+        .register-box h2 {
+            text-align: center;
+            margin-bottom: 1.5rem;
+            font-weight: 600;
+        }
+
+        .form-control,
+        .form-select {
+            border-radius: 8px;
+            padding: 0.6rem;
+            margin-bottom: 1rem;
+        }
+
+        .btn-register {
+            background: var(--primary);
+            border: none;
+            border-radius: 30px;
+            width: 100%;
+            padding: 0.7rem;
+            font-weight: 600;
+        }
+
+        .btn-register:hover {
+            background: #1e3799;
+            color: #fff;
+        }
+
+        body[data-theme="dark"] .btn-register:hover {
+            background: linear-gradient(135deg, #1e3799, #3c6382);
+            color: #cef9fd;
+        }
+
+        .toggle-theme {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--secondary);
+        }
+
+        body[data-theme="dark"] .toggle-theme {
+            color: #ffd369;
+        }
+
+        #customAlertBox.success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border-left: 6px solid #198754;
+        }
+
+        #customAlertBox.error {
+            background-color: #f8d7da;
+            color: #842029;
+            border-left: 6px solid #dc3545;
+        }
+
+        .role-fields {
+            margin-top: 1rem;
+            padding: 1rem;
+            background: rgba(0, 0, 0, 0.05);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        body[data-theme="dark"] .role-fields {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .position-relative {
+            position: relative;
+        }
+
+        #toggleIcon {
+            cursor: pointer;
+        }
+
+        .progress-bar-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 30px;
+            font-weight: bold;
+            gap: 20px;
+            position: relative;
+        }
+
+        .progress-bar-steps .step {
+            width: 30px;
+            height: 30px;
+            background: #ccc;
+            color: #fff;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer;
+            transition: 0.3s;
+            z-index: 1;
+        }
+
+        .progress-bar-steps .step.active {
+            background: var(--primary);
+            color: #000;
+        }
+
+        .progress-bar-steps .progress-line {
+            flex: 1;
+            height: 2px;
+            background: #ccc;
+            position: absolute;
+            top: 50%;
+            left: 40%;
+            right: 40%;
+            z-index: 0;
+        }
+
+        .back-btn {
+            background: transparent;
+            border: 1px solid var(--secondary);
+            color: var(--secondary);
+            padding: 8px 16px;
+            margin-right: 10px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        .back-btn:hover {
+            background-color: var(--secondary);
+            color: white;
+        }
+
+        [data-theme="dark"] .back-btn {
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        [data-theme="dark"] .back-btn:hover {
+            background-color: var(--primary);
+            color: #000;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="register-container">
+        <!-- Left Panel -->
+        <div class="left-panel">
+            <div class="logo">University System</div>
+            <hr style="height:2px;width:75%; border-width:0;color:rgb(46, 70, 224);background-color:rgb(114, 163, 253)">
+            <h1><strong>Join Our Community</strong></h1>
+            <p>Create your account to access the university management system</p>
+        </div>
+
+        <!-- Right Panel (Register Form) -->
+        <div class="right-panel">
+            <div class="toggle-theme" onclick="toggleTheme()">🌓</div>
+            <div class="register-box">
+                <h2>Register</h2>
+
+                <!-- Progress Steps -->
+                <div class="progress-bar-steps">
+                    <span id="step1Indicator" class="step active" onclick="goToStep(1)">1</span>
+                    <div class="progress-line"></div>
+                    <span id="step2Indicator" class="step" onclick="goToStep(2)">2</span>
+                </div>
+
+                <form id="registerForm" action="php/auth/register.php" method="POST" novalidate>
+                    <!-- Step 1: Role and Credentials -->
+                    <div id="registerStep1">
+                        <select class="form-select" id="role" name="role" required>
+                            <option value="">Select Role</option>
+                            <option value="student">Student</option>
+                            <option value="faculty">Faculty</option>
+                            <option value="admin">Administrator</option>
+                            <option value="hr">HR Staff</option>
+                            <option value="finance">Finance Staff</option>
+                            <option value="campus">Campus Staff</option>
+                        </select>
+
+                        <input type="text" class="form-control" id="username" name="username" placeholder="Username"
+                            required>
+
+                        <div class="position-relative">
+                            <input type="password" id="password" name="password" class="form-control pe-5"
+                                placeholder="Password" required>
+                            <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+                                id="togglePassword" style="cursor: pointer;"></i>
+                        </div>
+
+                        <div class="position-relative">
+                            <input type="password" id="confirmPassword" name="confirmPassword" class="form-control pe-5"
+                                placeholder="Confirm Password" required>
+                            <i class="bi bi-eye-slash position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+                                id="toggleConfirmPassword" style="cursor: pointer;"></i>
+                        </div>
+
+                        <button type="button" class="btn btn-register" onclick="validateStep1()">
+                            Next
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Personal Information -->
+                    <div id="registerStep2" style="display:none;">
+                        <input type="text" class="form-control" id="firstName" name="firstName" placeholder="First Name"
+                            required>
+                        <input type="text" class="form-control" id="lastName" name="lastName" placeholder="Last Name"
+                            required>
+                        <input type="email" class="form-control" id="email" name="email" placeholder="Email" required>
+
+                        <!-- Student Specific Fields -->
+                        <div id="studentFields" class="role-fields" style="display:none;">
+                            <input type="text" class="form-control" id="studentId" name="studentId"
+                                placeholder="Student ID">
+                            <input type="text" class="form-control" id="program" name="program" placeholder="Program">
+                        </div>
+
+
+
+                        <div class="d-flex">
+                            <button type="button" class="back-btn" onclick="goToStep(1)">
+                                Back
+                            </button>
+                            <button type="submit" class="btn btn-register flex-grow-1" id="registerBtn">
+                                <span id="registerBtnText">Register</span>
+                                <span id="registerSpinner" class="spinner-border spinner-border-sm ms-2"
+                                    style="display: none;"></span>
+                            </button>
+                        </div>
+                    </div>
+                </form>
+
+                <p class="text-center mt-3">Already have an account? <a href="login.html">Login here</a></p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Theme setup
+        const savedTheme = localStorage.getItem("theme");
+        if (savedTheme) {
+            document.body.dataset.theme = savedTheme;
+        } else {
+            document.body.dataset.theme = window.matchMedia('(prefers-color-scheme: dark)').matches ? "dark" : "light";
+        }
+
+        function toggleTheme() {
+            const newTheme = document.body.dataset.theme === "dark" ? "light" : "dark";
+            document.body.dataset.theme = newTheme;
+            localStorage.setItem("theme", newTheme);
+        }
+
+        // Password visibility toggle
+        function setupPasswordToggle(inputId, iconId) {
+            const input = document.getElementById(inputId);
+            const icon = document.getElementById(iconId);
+
+            icon.addEventListener("click", function () {
+                if (input.type === "password") {
+                    input.type = "text";
+                    icon.classList.replace("bi-eye-slash", "bi-eye");
+                } else {
+                    input.type = "password";
+                    icon.classList.replace("bi-eye", "bi-eye-slash");
+                }
+            });
+        }
+
+        // Step navigation
+        function goToStep(stepNumber) {
+            if (stepNumber === 1) {
+                document.getElementById("registerStep1").style.display = "block";
+                document.getElementById("registerStep2").style.display = "none";
+                document.getElementById("step1Indicator").classList.add("active");
+                document.getElementById("step2Indicator").classList.remove("active");
+            } else if (stepNumber === 2) {
+                document.getElementById("registerStep1").style.display = "none";
+                document.getElementById("registerStep2").style.display = "block";
+                document.getElementById("step1Indicator").classList.remove("active");
+                document.getElementById("step2Indicator").classList.add("active");
+            }
+        }
+
+        // Validate step 1 before proceeding
+        function validateStep1() {
+            const role = document.getElementById("role").value;
+            const username = document.getElementById("username").value.trim();
+            const password = document.getElementById("password").value;
+            const confirmPassword = document.getElementById("confirmPassword").value;
+
+            if (!role) {
+                showAlert("Please select a role", false);
+                return false;
+            }
+            if (!username) {
+                showAlert("Please enter a username", false);
+                return false;
+            }
+            if (!password) {
+                showAlert("Please enter a password", false);
+                return false;
+            }
+            if (password !== confirmPassword) {
+                showAlert("Passwords do not match", false);
+                return false;
+            }
+            if (password.length < 8) {
+                showAlert("Password must be at least 8 characters", false);
+                return false;
+            }
+
+            // If all validations pass, go to step 2
+            goToStep(2);
+            return true;
+        }
+
+        // Update the form submission handling
+        document.getElementById("registerForm").addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const registerBtn = document.getElementById("registerBtn");
+            const registerBtnText = document.getElementById("registerBtnText");
+            const registerSpinner = document.getElementById("registerSpinner");
+            const role = document.getElementById("role").value;
+
+            // Show loading state
+            registerBtn.disabled = true;
+            registerBtnText.textContent = "Registering...";
+            registerSpinner.style.display = "inline-block";
+
+            try {
+                const formData = new FormData(this);
+
+                // Only add student-specific fields (others are autogenerated)
+                if (role === 'student') {
+                    const studentId = document.getElementById("studentId");
+                    const program = document.getElementById("program");
+
+                    if (!studentId || !program) {
+                        throw new Error("Student fields are missing");
+                    }
+
+                    formData.append("studentId", studentId.value);
+                    formData.append("program", program.value);
+                }
+
+                const response = await fetch(this.action, {
+                    method: 'POST',
+                    body: formData,
+                    headers: {
+                        'Accept': 'application/json'
+                    }
+                });
+
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
+
+                const result = await response.json();
+
+                if (result.success) {
+                    showAlert("Account created successfully! Redirecting to login...", true);
+                    setTimeout(() => {
+                        window.location.href = "login.html?registration=success";
+                    }, 1500);
+                } else {
+                    showAlert(result.error || "Registration failed. Please try again.", false);
+                }
+            } catch (error) {
+                console.error('Registration error:', error);
+                showAlert(error.message || "Registration failed. Please try again.", false);
+            } finally {
+                registerBtn.disabled = false;
+                registerBtnText.textContent = "Register";
+                registerSpinner.style.display = "none";
+            }
+        });
+
+        // Update role fields visibility
+        document.getElementById("role").addEventListener("change", function () {
+            const role = this.value;
+
+            // Hide all role-specific fields first
+            document.querySelectorAll('.role-fields').forEach(field => {
+                field.style.display = 'none';
+            });
+
+            // Show fields for selected role
+            switch (role) {
+                case 'student':
+                    document.getElementById("studentFields").style.display = "block";
+                    break;
+                case 'faculty':
+                    document.getElementById("facultyFields").style.display = "block";
+                    break;
+                case 'hr':
+                    document.getElementById("hrFields").style.display = "block";
+                    break;
+                case 'finance':
+                    document.getElementById("financeFields").style.display = "block";
+                    break;
+                case 'campus':
+                    document.getElementById("campusFields").style.display = "block";
+                    break;
+            }
+        });
+
+        // Initialize password toggles
+        setupPasswordToggle("password", "togglePassword");
+        setupPasswordToggle("confirmPassword", "toggleConfirmPassword");
+
+        // Alert system
+        function showAlert(message, isSuccess = false) {
+            const alertBox = document.getElementById("customAlertBox");
+            alertBox.textContent = message;
+            alertBox.className = isSuccess ? "success" : "error";
+            alertBox.style.display = "block";
+            alertBox.style.opacity = "1";
+
+            setTimeout(() => {
+                alertBox.style.opacity = "0";
+                setTimeout(() => alertBox.style.display = "none", 300);
+            }, 3000);
+        }
+
+        // Make functions available globally for button clicks
+        window.goToStep = goToStep;
+        window.validateStep1 = validateStep1;
+
+        // Add this to your register.html script section
+        function checkRegistrationSuccess() {
+            // Check if coming from successful registration
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('registration') === 'success') {
+                showAlert("Account created successfully! You can now login.", true);
+                // Clean the URL
+                window.history.replaceState({}, document.title, window.location.pathname);
+            }
+        }
+
+        // Call this when the page loads
+        document.addEventListener("DOMContentLoaded", checkRegistrationSuccess);
+    </script>
+
+    <!-- Custom Alert Box -->
+    <div id="customAlertBox" style="
+       position: fixed;
+       top: 20px;
+       left: 50%;
+       transform: translateX(-50%);
+       min-width: 300px;
+       max-width: 90vw;
+       z-index: 9999;
+       display: none;
+       padding: 15px 20px;
+       border-radius: 8px;
+       font-weight: 500;
+       font-family: 'Segoe UI', sans-serif;
+       box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+       transition: opacity 0.3s ease;
+       text-align: center;
+">
+    </div>
+
+    <!-- Link to your original auth.js -->
+    <script src="js/auth.js"></script>
+</body>
+
+</html>

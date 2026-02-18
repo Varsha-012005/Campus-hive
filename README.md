@@ -20,7 +20,7 @@ Dark/light theme toggle and animated bee cursor
 File uploads for assignments/resumes
 
 Project Structure
-
+.
 ├── index.html (Landing page)
 ├── login.html & register.html
 ├── assets/
